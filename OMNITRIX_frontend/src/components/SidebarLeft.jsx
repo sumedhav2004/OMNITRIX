@@ -1,24 +1,30 @@
 import React from 'react'
 import { ScrollArea } from './ui/scroll-area'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Profile from './Profile';
 
 
-const Sidebar = () => {
-  const name = "Sumedhav";
+const Sidebar = ({name,logged}) => {
+  const firstName = name.substring(0, name.indexOf(' '));
   const followers = 112;
 
   
   return (
     <>
       <div className='h-screen w-24 flex flex-col p-1 items-center justify between'>
-        <div className='flex flex-col items-center'>
-        <Avatar className='w-18 h-18'>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <h4 className='font-semibold'>{name}</h4>
-        <h6>{followers}</h6>
-        </div>
+        {
+          logged ? (
+            <div className='flex flex-col items-center w-full'>
+              <Profile />
+              <h4 className='font-semibold'>{firstName}</h4>
+              <h6>{followers}</h6>
+            </div>
+          ) : (
+            <div className='flex flex-col items-center w-full'>
+              <Profile />
+            </div>
+          )
+        }
 
         <div className='flex flex-col items-center'>
 
@@ -28,4 +34,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default Sidebar;

@@ -76,4 +76,18 @@ exports.login = async (req, res) => {
         res.status(500).json({ msg: 'Server error' });
     }
 };
-;
+exports.getUserInfo = async (req, res) => {
+    try {
+        const userId = req.user.id; // Extracted from the token by the auth middleware
+        const user = await User.findById(userId).select('-password'); // Exclude the password field
+
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (err) {
+        console.error('Get User Info Error:', err);
+        res.status(500).json({ msg: 'Server error' });
+    }
+};
